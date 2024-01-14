@@ -5,12 +5,14 @@ import ListOfItems from "./components/ListOfItems";
 import CountButton100 from "./components/CountButton100";
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(parseInt(localStorage.getItem('count')) || 0 );
+  const [totalCookies, setTotalCookies] = useState(parseInt(localStorage.getItem('totalCookies')) || 0  );
+  const [timer, setTimer] = useState(parseFloat(localStorage.getItem('timerReciprocal')) ? 1 / parseFloat(localStorage.getItem('timerReciprocal')) : 1000);
   const [seconds, setSeconds] = useState(1); // New state variable for seconds
   const [intervalSet, setIntervalSet] = useState(false);
-  const [timer, setTimer] = useState(1000); // interval duration in milliseconds
+  // const [timer, setTimer] = useState(1000); // interval duration in milliseconds
   const [countloop, setCountloop] = useState (1);
-  const [totalCookies, setTotalCookies] = useState(0);
+  // const [totalCookies, setTotalCookies] = useState(0);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const [isButtonPressed2, setIsButtonPressed2] = useState(false);
   const [isButtonPressed3, setIsButtonPressed3] = useState(false);
@@ -19,7 +21,7 @@ export default function App() {
   const [fontColor, setFontColor] = useState('black'); // New state for background color
   const [fontType, setFontType] = useState('Arial'); // New state for background color
   const [fontSize, setFontSize] = useState('16px'); // New state for background color
-
+  
 
   const handleButtonPress = (buttonId) => {
     if (buttonId === 'b1') {
@@ -81,6 +83,20 @@ export default function App() {
     console.log(timer);
   }, [countloop]);
 
+// UseEffect hook to store count in local storage
+useEffect(() => {
+  localStorage.setItem('count', count.toString());
+}, [count]);
+
+// UseEffect hook to store totalCookies in local storage
+useEffect(() => {
+  localStorage.setItem('totalCookies', totalCookies.toString());
+}, [totalCookies]);
+
+// UseEffect hook to store reciprocal of timer in local storage
+useEffect(() => {
+  localStorage.setItem('timerReciprocal', (1 / timer).toString());
+}, [timer]);
 
 
   return (
